@@ -10,34 +10,37 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import mg.itu.patrick.tpcustomer.entity.Customer;
+import mg.itu.patrick.tpcustomer.entity.Discount;
 
 /**
- * Gère la persistance des Customers.
- * 
+ *
  * @author patrick
  */
 @RequestScoped
-public class CustomerManager {
+public class DiscountManager {
     @PersistenceContext(unitName = "customerPU")
     private EntityManager em;
-
-    public List<Customer> getAllCustomers() {
-        Query query = em.createNamedQuery("Customer.findAll");
+    
+    public List<Discount> getAllDiscounts() {
+        Query query = em.createNamedQuery("Discount.findAll");
         return query.getResultList();
     }
     
-    public Customer findById(int idCustomer) {  
-        return em.find(Customer.class, idCustomer);  
+    public Discount findById(int idDiscount) {  
+        return em.find(Discount.class, idDiscount);  
+    }
+    
+    public Discount findById(String code) {
+        return em.find(Discount.class, code);
     }
 
     @Transactional
-    public Customer update(Customer customer) {
-        return em.merge(customer);
+    public Discount update(Discount discount) {
+        return em.merge(discount);
     }
 
     @Transactional
-    public void persist(Customer customer) {
-        em.persist(customer);
+    public void persist(Discount discount) {
+        em.persist(discount);
     }
 }
